@@ -22,7 +22,10 @@ end
 
 group :test do
 	gem 'selenium-webdriver', '2.0.0'
+
+	# Use Capybara for natural language-like testing syntax
 	gem 'capybara', '2.1.0'
+
 	# Uncomment this line on OS X.
 	# gem 'growl', '1.0.3'
 
