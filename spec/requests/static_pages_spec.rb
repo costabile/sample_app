@@ -19,17 +19,44 @@ describe "Static pages" do
 
     describe "for signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
+      let(:micropost_count) {40}
       before do
-        FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
-        FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+        micropost_count.times {
+          FactoryGirl.create(:micropost, user: user, content: Faker::Lorem.sentence(5)) }
         sign_in user
         visit root_path
       end
 
-      it "should render the user's feed" do
-        user.feed.each do |item|
-          expect(page).to have_selector("li##{item.id}", text: item.content)
+      it { should have_content("#{micropost_count} microposts") }
+
+      describe "should render the user's feed with pagination" do
+        it { should have_selector('div.pagination') }
+        it "should list each micropost" do
+          user.microposts.paginate(page: 1).each do |micropost|
+            expect(page).to have_selector('li', text: micropost.content)
+          end
         end
+      end
+
+      describe "should pluralize the user's micropost count correctly" do
+        before do
+          user.microposts.delete_all
+          FactoryGirl.create(:micropost, user: user, content: "Lorem")
+          visit root_path
+        end
+
+        it { should have_content("1 micropost") }
+      end
+      
+      describe "follower/following counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit root_path
+        end
+
+        it { should have_link("0 following", href: following_user_path(user)) }
+        it { should have_link("1 followers", href: followers_user_path(user)) }
       end
     end
   end
