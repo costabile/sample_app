@@ -1,0 +1,14 @@
+adding replies
+
+-add validation for username attrib in user model
+-add username to db, index unique
+-add to signup/edit form
+-add to sample user creation scripts
+-display username with user info
+-display replies only in relevant feeds
+-created migration for in_reply_to column of Microposts
+-in reply MPs, make @<username> link to user page
+
+todo:
+add testing for username attribute + display; replies
+	

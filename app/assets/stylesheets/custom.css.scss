@@ -163,6 +163,13 @@ aside {
   }
 }
 
+.username
+{
+  letter-spacing: -1px;
+  text-align: left;
+  color: $grayLight;
+}
+
 /* forms */
 
 input, textarea, select, .uneditable-input {
