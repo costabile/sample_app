@@ -1,5 +1,3 @@
-adding replies
-
 -add validation for username attrib in user model
 -add username to db, index unique
 -add to signup/edit form
